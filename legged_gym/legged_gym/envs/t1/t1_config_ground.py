@@ -194,7 +194,7 @@ class T1Cfg( LeggedRobotCfg ):
 
 
     class asset( LeggedRobotCfg.asset ):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/t1/urdf/t1_29dof.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/t1/urdf/t1_29dof_keyframes.urdf'
         name = "t1"
         left_foot_name = "Left_Ankle"
         right_foot_name = "Right_ankle"
