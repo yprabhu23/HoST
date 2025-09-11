@@ -20,6 +20,7 @@ from legged_gym.utils.isaacgym_utils import get_euler_xyz as get_euler_xyz_in_te
 from legged_gym.utils.helpers import class_to_dict
 from .legged_robot_config import LeggedRobotCfg
 
+
 from legged_gym.envs.g1.g1_utils import (
     MotionLib, 
     load_imitation_dataset,
@@ -725,7 +726,9 @@ class LeggedRobot(BaseTask):
 
         # save body names from the asset
         body_names = self.gym.get_asset_rigid_body_names(robot_asset)
+        # breakpoint()
         self.dof_names = self.gym.get_asset_dof_names(robot_asset)
+        # breakpoint()
         self.num_bodies = len(body_names)
         self.num_dofs = len(self.dof_names)
         feet_names = [s for s in body_names if self.cfg.asset.foot_name in s and 'auxiliary' not in s]
@@ -743,7 +746,7 @@ class LeggedRobot(BaseTask):
         start_pose.p = gymapi.Vec3(*self.base_init_state[:3])
 
         self.default_rigid_body_mass = torch.zeros(self.num_bodies, dtype=torch.float, device=self.device, requires_grad=False)
-        self.torso_link_index = body_names.index("torso_link")
+        self.torso_link_index = body_names.index("Trunk")#Use for g1: "torso_link"
 
         self._get_env_origins()
         env_lower = gymapi.Vec3(0., 0., 0.)

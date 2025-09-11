@@ -136,7 +136,7 @@ class T1Cfg( LeggedRobotCfg ):
         }
 
     class env(LeggedRobotCfg.env):
-        num_one_step_observations=  64 #+ 3 * 2#+ 3 * 11  # +3*11 actions / -3 commands  i
+        num_one_step_observations=  6 + 2*29 + 29 + 1  # = 94 #+ 3 * 2#+ 3 * 11  # +3*11 actions / -3 commands  i
         num_actions = 29#19 #+ 2# + 11
         num_dofs = 29#19
         num_actor_history = 6
@@ -194,54 +194,97 @@ class T1Cfg( LeggedRobotCfg ):
 
 
     class asset( LeggedRobotCfg.asset ):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/t1/urdf/t1_29dof_keyframes.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/t1/t1_29dof_keyframes.urdf'
         name = "t1"
-        left_foot_name = "Left_Ankle"
-        right_foot_name = "Right_ankle"
-        left_knee_name = 'Left_Knee'
-        right_knee_name = 'Right_Knee'
-        left_thigh_name = 'Left_Hip_Pitch'
-        right_thigh_name = 'Right_Hip_Pitch'
-        foot_name = "Ankle"
+        base_name = "Trunk"
+        trunk_names = ['Trunk', 'Waist']
+
+        # Feet & ankles
+        foot_name = "foot_link"                 # will match: left_foot_link, right_foot_link
+        left_foot_name  = "left_foot_link"      # was "Left_Ankle" (no such link)
+        right_foot_name = "right_foot_link"     # was "Right_ankle" (no such link, wrong case)
+        left_ankle_names  = ["Ankle_Cross_Left"]
+        right_ankle_names = ["Ankle_Cross_Right"]
+
+        # Knees (you have no non-keyframe "knee" link; use shanks)
+        left_knee_name  = 'Shank_Left'          # was "Left_Knee"
+        right_knee_name = 'Shank_Right'         # was "Right_Knee"
+
+        # Shoulders (use the actual shoulder links)
+        left_shoulder_name  = "AL1"             # was "left_shoulder" (only exists in keyframe link)
+        right_shoulder_name = "AR1"
+
+        # Hip/thigh groups — your link names are Hip_*_Left/Right (order reversed vs cfg comments)
+        left_thigh_name = 'Hip_Pitch_Left'
+        right_thigh_name = 'Hip_Pitch_Right'
+
+        # Joint groups (DOF names you printed are correct)
+        left_leg_joints  = ['Left_Hip_Yaw', 'Left_Hip_Roll', 'Left_Hip_Pitch', 'Left_Knee_Pitch', 'Left_Ankle_Roll', 'Left_Ankle_Pitch']
+        right_leg_joints = ['Right_Hip_Yaw','Right_Hip_Roll','Right_Hip_Pitch','Right_Knee_Pitch','Right_Ankle_Roll','Right_Ankle_Pitch']
+
+        left_hip_joints = ['Left_Hip_Yaw', 'Left_Hip_Roll', 'Left_Hip_Pitch']
+        right_hip_joints = ['Right_Hip_Yaw','Right_Hip_Roll','Right_Hip_Pitch']
+
+        left_hip_roll_joints  = ['Left_Hip_Roll']
+        right_hip_roll_joints = ['Right_Hip_Roll']
+
+        left_hip_pitch_joints  = ['Left_Hip_Pitch']
+        right_hip_pitch_joints = ['Right_Hip_Pitch']
+
+        left_knee_joints  = ['Left_Knee_Pitch']
+        right_knee_joints = ['Right_Knee_Pitch']
+
+        left_arm_joints  = ["Left_Shoulder_Pitch","Left_Shoulder_Roll","Left_Elbow_Pitch","Left_Elbow_Yaw","Left_Wrist_Pitch","Left_Wrist_Yaw"]
+        right_arm_joints = ["Right_Shoulder_Pitch","Right_Shoulder_Roll","Right_Elbow_Pitch","Right_Elbow_Yaw","Right_Wrist_Pitch","Right_Wrist_Yaw"]
+        waist_joints = ["Waist"]
+        knee_joints  = ['Left_Knee_Pitch','Right_Knee_Pitch']
+        ankle_joints = ['Left_Ankle_Roll','Left_Ankle_Pitch','Right_Ankle_Roll','Right_Ankle_Pitch']
+        # left_foot_name = "Left_Ankle"
+        # right_foot_name = "Right_ankle"
+        # left_knee_name = 'Left_Knee'
+        # right_knee_name = 'Right_Knee'
+        # left_thigh_name = 'Left_Hip_Pitch'
+        # right_thigh_name = 'Right_Hip_Pitch'
+        # foot_name = "Ankle"
         penalize_contacts_on = ["Elbow", 'Shoulder', 'Trunk', 'Waist', 'Knee', 'Hip']
         terminate_after_contacts_on = []    #'torse'
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
 
-        left_shoulder_name = "left_shoulder"
-        right_shoulder_name = "right_shoulder"
-        # LEft Hip Yaw 
-        left_leg_joints = ['Left_Hip_Yaw', 'Left_Hip_Roll', 'Left_Hip_Pitch', 'Left_Knee_Pitch', 'Left_Ankle_Roll', 'Left_Ankle_Pitch']
-        right_leg_joints = ['Right_Hip_Yaw', 'Right_Hip_Roll', 'Right_Hip_Pitch', 'Right_Knee_Pitch',  'Right_Ankle_Roll', 'Right_Ankle_Pitch']
-        left_hip_joints = ['Left_Hip_Yaw', 'Left_Hip_Roll', 'Left_Hip_Pitch']
-        right_hip_joints = ['Right_Hip_Yaw',  'Right_Hip_Roll', 'Right_Hip_Pitch']
+        # left_shoulder_name = "Left_Shoulder"
+        # right_shoulder_name = "Right_Shoulder"
+        # # LEft Hip Yaw 
+        # left_leg_joints = ['Left_Hip_Yaw', 'Left_Hip_Roll', 'Left_Hip_Pitch', 'Left_Knee_Pitch', 'Left_Ankle_Roll', 'Left_Ankle_Pitch']
+        # right_leg_joints = ['Right_Hip_Yaw', 'Right_Hip_Roll', 'Right_Hip_Pitch', 'Right_Knee_Pitch',  'Right_Ankle_Roll', 'Right_Ankle_Pitch']
+        # left_hip_joints = ['Left_Hip_Yaw', 'Left_Hip_Roll', 'Left_Hip_Pitch']
+        # right_hip_joints = ['Right_Hip_Yaw',  'Right_Hip_Roll', 'Right_Hip_Pitch']
 
-        left_hip_roll_joints = ['Left_Hip_Roll',]
-        right_hip_roll_joints = ['Right_Hip_Roll',]    
+        # left_hip_roll_joints = ['Left_Hip_Roll',]
+        # right_hip_roll_joints = ['Right_Hip_Roll',]    
 
-        left_hip_pitch_joints = ['Left_Hip_Pitch']
-        right_hip_pitch_joints = ['Right_Hip_Pitch']     
+        # left_hip_pitch_joints = ['Left_Hip_Pitch']
+        # right_hip_pitch_joints = ['Right_Hip_Pitch']     
 
         left_shoulder_roll_joints = ["Left_Shoulder_Roll"]
         right_shoulder_roll_joints = ["Right_Shoulder_Roll"]    
 
 
-        left_knee_joints = ['Left_Knee_Pitch']
-        right_knee_joints = ['Right_Knee_Pitch']    
-        # NEed to edit here
-        left_arm_joints = ["Left_Shoulder_Pitch", "Left_Shoulder_Roll", "Left_Elbow_Pitch", "Left_Elbow_Yaw","Left_Wrist_Pitch", "Left_Wrist_Yaw" ]
-        right_arm_joints = ["Right_Shoulder_Pitch", "Right_Shoulder_Roll", 'Right_Elbow_Pitch', "Right_Elbow_Yaw", "Right_Wrist_Pitch", "Right_Wrist_Yaw", ]
-        waist_joints = ["Waist"]
-        knee_joints = ['Left_Knee_Pitch', 'Right_Knee_Pitch']
-        ankle_joints = ['Left_Ankle_Roll', 'Left_Ankle_Pitch','Right_Ankle_Roll', 'Right_Ankle_Pitch']
+        # left_knee_joints = ['Left_Knee_Pitch']
+        # right_knee_joints = ['Right_Knee_Pitch']    
+        # # NEed to edit here
+        # left_arm_joints = ["Left_Shoulder_Pitch", "Left_Shoulder_Roll", "Left_Elbow_Pitch", "Left_Elbow_Yaw","Left_Wrist_Pitch", "Left_Wrist_Yaw" ]
+        # right_arm_joints = ["Right_Shoulder_Pitch", "Right_Shoulder_Roll", 'Right_Elbow_Pitch', "Right_Elbow_Yaw", "Right_Wrist_Pitch", "Right_Wrist_Yaw", ]
+        # waist_joints = ["Waist"]
+        # knee_joints = ['Left_Knee_Pitch', 'Right_Knee_Pitch']
+        # ankle_joints = ['Left_Ankle_Roll', 'Left_Ankle_Pitch','Right_Ankle_Roll', 'Right_Ankle_Pitch']
 
         keyframe_name = "keyframe"
         head_name = 'keyframe_head'
         armature = 0
 
-        trunk_names = ['Trunk', 'Waist']
-        base_name = 'Trunk'
-        # tracking_body_names =  ['pelvis']
+        # trunk_names = ['Trunk', 'Waist']
+        # base_name = 'Trunk'
+        # # tracking_body_names =  ['pelvis']
 
         left_upper_body_names = ["Left_Shoulder_Pitch", "Left_Shoulder_Roll", "Left_Elbow_Pitch", "Left_Elbow_Yaw","AL1", "AL2", "AL3", "AL4"]
         right_upper_body_names = ["Right_Shoulder_Pitch", "Right_Shoulder_Roll", 'Right_Elbow_Pitch', "Right_Elbow_Yaw","AR1", "AR2", "AR3", "AR4"]
@@ -268,11 +311,11 @@ class T1Cfg( LeggedRobotCfg ):
         only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
         orientation_sigma = 1
         is_gaussian = True
-        target_head_height = 1.5
+        target_head_height = 0.885
         target_head_margin = 1
-        target_base_height_phase1 = 0.65
-        target_base_height_phase2 = 0.65
-        target_base_height_phase3 = 0.9
+        target_base_height_phase1 = 0.354
+        target_base_height_phase2 = 0.354
+        target_base_height_phase3 = 0.826
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -2
         right_foot_displacement_sigma = -2
@@ -375,8 +418,8 @@ class T1Cfg( LeggedRobotCfg ):
 
     class curriculum:
         pull_force = True
-        force = 400
-        threshold_height = 1.4
+        force = 0.6 * 30.0 * 9.81
+        threshold_height = 0.826
         dof_vel_limit = 300
         base_vel_limit = 20
         no_orientation = True
