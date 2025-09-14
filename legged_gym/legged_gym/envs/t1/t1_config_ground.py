@@ -148,6 +148,95 @@ class T1Cfg( LeggedRobotCfg ):
         # PD Drive parameters:
         control_type = 'P'
           # PD Drive parameters:
+
+        # Per-DOF PD gains (maps DOF name -> kp / kd)
+
+        stiffness = {
+            # Head/neck (conservative)
+            "AAHead_yaw": 50,
+            "Head_pitch": 50,
+
+            # Torso
+            "Waist": 200,
+
+            # Left arm
+            "Left_Shoulder_Pitch": 350,
+            "Left_Shoulder_Roll": 350,
+            "Left_Elbow_Pitch": 350,
+            "Left_Elbow_Yaw": 350,
+            "Left_Wrist_Pitch": 200,
+            "Left_Wrist_Yaw": 200,
+            "Left_Hand_Roll": 50,
+
+            # Right arm
+            "Right_Shoulder_Pitch": 350,
+            "Right_Shoulder_Roll": 350,
+            "Right_Elbow_Pitch": 350,
+            "Right_Elbow_Yaw": 350,
+            "Right_Wrist_Pitch": 200,
+            "Right_Wrist_Yaw": 200,
+            "Right_Hand_Roll": 50,
+
+            # Left leg
+            "Left_Hip_Yaw": 350,
+            "Left_Hip_Roll": 350,
+            "Left_Hip_Pitch": 350,
+            "Left_Knee_Pitch": 350,
+            "Left_Ankle_Pitch": 120,
+            "Left_Ankle_Roll": 120,
+
+            # Right leg
+            "Right_Hip_Yaw": 350,
+            "Right_Hip_Roll": 350,
+            "Right_Hip_Pitch": 350,
+            "Right_Knee_Pitch": 350,
+            "Right_Ankle_Pitch": 120,
+            "Right_Ankle_Roll": 120,
+        }
+
+        damping = {
+            # Head/neck (conservative)
+            "AAHead_yaw": 1,
+            "Head_pitch": 1,
+
+            # Torso
+            "Waist": 4,
+
+            # Left arm
+            "Left_Shoulder_Pitch": 4,
+            "Left_Shoulder_Roll": 4,
+            "Left_Elbow_Pitch": 4,
+            "Left_Elbow_Yaw": 4,
+            "Left_Wrist_Pitch": 3,
+            "Left_Wrist_Yaw": 3,
+            "Left_Hand_Roll": 1,
+
+            # Right arm
+            "Right_Shoulder_Pitch": 4,
+            "Right_Shoulder_Roll": 4,
+            "Right_Elbow_Pitch": 4,
+            "Right_Elbow_Yaw": 4,
+            "Right_Wrist_Pitch": 3,
+            "Right_Wrist_Yaw": 3,
+            "Right_Hand_Roll": 1,
+
+            # Left leg
+            "Left_Hip_Yaw": 4,
+            "Left_Hip_Roll": 4,
+            "Left_Hip_Pitch": 4,
+            "Left_Knee_Pitch": 4,
+            "Left_Ankle_Pitch": 2,
+            "Left_Ankle_Roll": 2,
+
+            # Right leg
+            "Right_Hip_Yaw": 4,
+            "Right_Hip_Roll": 4,
+            "Right_Hip_Pitch": 4,
+            "Right_Knee_Pitch": 4,
+            "Right_Ankle_Pitch": 2,
+            "Right_Ankle_Roll": 2,
+        }
+
         stiffness = {'hip': 350,
                      'knee': 350,
                      'ankle': 120,

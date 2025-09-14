@@ -746,7 +746,7 @@ class LeggedRobot(BaseTask):
         start_pose.p = gymapi.Vec3(*self.base_init_state[:3])
 
         self.default_rigid_body_mass = torch.zeros(self.num_bodies, dtype=torch.float, device=self.device, requires_grad=False)
-        self.torso_link_index = body_names.index("Trunk")#Use for g1: "torso_link"
+        self.torso_link_index = body_names.index("Trunk")#Use for g1: "torso_link" Use for t1: "Trunk"
 
         self._get_env_origins()
         env_lower = gymapi.Vec3(0., 0., 0.)
